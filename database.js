@@ -4,17 +4,17 @@ const users= [
     {
         id: shortID.generate(),
         name: 'James Bond',
-        bio: 'Greatest British Agent ever'
+        bio: 'Greatest British Agent'
     },
     {
         id: shortID.generate(),
         name: 'Tom Cruise',
-        bio: 'Greatest American Agent ever'
+        bio: 'Greatest American Agent'
     },
     {
         id: shortID.generate(),
         name: 'Evelyn Salt',
-        bio: 'Greatest Double Agent ever'
+        bio: 'Greatest Double Agent'
     }
 ]
 
@@ -28,7 +28,7 @@ function getUserById(id) {
 
 function createUser(data) {
 	const payload = {
-		id: String(users.length + 1),
+		// id: String(users.length + 1),
 		...data,
 	}
 
@@ -55,5 +55,6 @@ module.exports = {
 	getUserById,
 	createUser,
 	updateUser,
-	deleteUser,
+    deleteUser,
+    shortID,
 }
