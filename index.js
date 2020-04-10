@@ -25,7 +25,7 @@ server.get('/chars', (req, res) => {
         res.json(chars);
     } else{
         res.status(500).json({
-            errorMessage: "The chars information could not be retrieved.",
+            errorMessage: "The character information could not be retrieved.",
         })
     }
 })
@@ -39,14 +39,15 @@ server.get('/chars/:id', (req, res) => {
 
     if(char){
         res.json(char)
-    } else{
+    } else if(!char){
         res.status(404).json({
-            message: 'User not found',
+            message: 'Character not found',
+        })
+    } else{
+        res.status(500).json({
+            errorMessage: "The character information could not be retrieved." 
         })
     }
-
-    // If there's an error in retrieving the user from the database:
-    //
 })
 
 server.post('/chars', (req, res) => {
@@ -54,7 +55,7 @@ server.post('/chars', (req, res) => {
 
     if(!req.body.name || !req.body.bio){
         return res.status(400).json({
-            message: 'Please provide name and bio for the user.'
+            message: 'Please provide name and bio for the character.'
         })
     }
 
@@ -66,10 +67,13 @@ server.post('/chars', (req, res) => {
 
     // 201 status code means a resource was successfully created
     
-    res.status(201).json(newChar);
-
-    // If there's an error while saving the user:
-    //
+    if(newChar){
+        res.status(201).json(newChar)
+    } else{
+        res.status(500).json({
+            errorMessage: "There was an error while saving the character to the database."
+        })
+    }
 
 })
 
@@ -87,10 +91,14 @@ server.patch('/chars/:id', (req, res) => {
             })
 
             res.status(200).json(updatedChar);
-       } else{
+       } else if(!char){
             res.status(404).json({
-                message: 'The user with the specified ID does not exist.',
+                message: 'The character with the specified ID does not exist.',
             })
+       } else{
+           res.status(500).json({
+               message: 'The character information could not be modified.'
+           })
        }
 
     //    if(!req.body.name && req.body.bio){
@@ -103,8 +111,6 @@ server.patch('/chars/:id', (req, res) => {
     //        })
     //    }
 
-    // if there's an error when updating the user:
-
     // if the request body is missing the name or bio property:
 })
 
@@ -115,14 +121,15 @@ server.delete('/chars/:id', (req, res) => {
         db.deleteChar(char.id)
         console.log('Deleted character:', char)
         res.status(204).end();
-    } else{
+    } else if(!char){
         res.status(404).json({
-			message: "The user with the specified ID does not exist.",
+			message: "The character with the specified ID does not exist.",
 		})
+    } else{
+        res.status(500).json({
+            errorMessage: 'The character could not be removed.',
+        })
     }
-
-    // If there's an error in removing the user from the database:
-    //
 })
 
 const port= 3030;
