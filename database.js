@@ -1,6 +1,6 @@
 const shortID= require('short-id');
 
-const users= [
+let chars= [
     {
         id: shortID.generate(),
         name: 'James Bond',
@@ -16,45 +16,45 @@ const users= [
         name: 'Evelyn Salt',
         bio: 'Greatest Double Agent'
     }
-]
+];
 
-function getUsers() {
-	return users
+function getChars() {
+	return chars;
 }
 
-function getUserById(id) {
-	return users.find(u => u.id === id)
+function getCharsById(id) {
+	return chars.find(u => u.id === id);
 }
 
-function createUser(data) {
+function createChar(data) {
 	const payload = {
-		// id: String(users.length + 1),
+		// id: String(chars.length + 1),
 		...data,
 	}
 
-	users.push(payload)
-	return payload
+	chars.push(payload);
+	return payload;
 }
 
-function updateUser(id, data) {
-	const index = users.findIndex(u => u.id === id)
-	users[index] = {
-		...users[index],
+function updateChar(id, data) {
+	const index = chars.findIndex(u => u.id === id)
+	chars[index] = {
+		...chars[index],
 		...data,
 	}
 	
-	return users[index]
+	return chars[index];
 }
 
-function deleteUser(id) {
-	users = users.filter(u => u.id != id)
+function deleteChar(id) {
+	chars = chars.filter(u => u.id != id);
 }
 
 module.exports = {
-	getUsers,
-	getUserById,
-	createUser,
-	updateUser,
-    deleteUser,
+	getChars,
+	getCharsById,
+	createChar,
+	updateChar,
+    deleteChar,
     shortID,
 }
