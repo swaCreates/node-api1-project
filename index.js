@@ -79,6 +79,12 @@ server.post('/chars', (req, res) => {
 
 server.patch('/chars/:id', (req, res) => {
    const char= db.getCharsById(req.params.id);
+
+//    if(!req.body.name || !req.body.bio){
+//         res.status(400).json({
+//             message: "Please enter a name or bio."
+//         })
+//     }
    
    // can't update a user that doesn't exist, so make sure it exists first
        if(char){
@@ -100,18 +106,6 @@ server.patch('/chars/:id', (req, res) => {
                message: 'The character information could not be modified.'
            })
        }
-
-    //    if(!req.body.name && req.body.bio){
-    //        return res.json(updateChar)
-    //    } else if(!req.body.bio && req.body.name){
-    //        return res.json(updateChar)
-    //    } else{
-    //        res.status(400).json({
-    //         errorMessage: "Please provide name or bio for the user."
-    //        })
-    //    }
-
-    // if the request body is missing the name or bio property:
 })
 
 server.delete('/chars/:id', (req, res) => {
